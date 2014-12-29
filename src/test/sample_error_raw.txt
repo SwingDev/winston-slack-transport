@@ -1,0 +1,74 @@
+second error
+     at DbError.SError (/source/index.coffee:26:11)
+     at new DbError (/source/index.coffee:53:3)
+     at /source/controllers/userCtrl.coffee:25:16
+     at /Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/async/lib/async.js:249:17
+     at /Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/async/lib/async.js:125:13
+     at Array.forEach (native)
+     at _each (/Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/async/lib/async.js:46:24)
+     at async.each (/Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/async/lib/async.js:124:9)
+     at _asyncMap (/Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/async/lib/async.js:248:13)
+     at Object.map (/Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/async/lib/async.js:219:23)
+     at exports.testError (/source/controllers/userCtrl.coffee:24:9)
+     at Layer.handle [as handle_request] (/Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express/lib/router/layer.js:82:5)
+     at next (/Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express/lib/router/route.js:100:13)
+     at Route.dispatch (/Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express/lib/router/route.js:81:3)
+     at Layer.handle [as handle_request] (/Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express/lib/router/layer.js:82:5)
+     at /Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express/lib/router/index.js:235:24
+     at Function.proto.process_params (/Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express/lib/router/index.js:313:12)
+     at /Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express/lib/router/index.js:229:12
+     at Function.match_layer (/Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express/lib/router/index.js:296:3)
+     at next (/Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express/lib/router/index.js:190:10)
+     at Function.proto.handle (/Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express/lib/router/index.js:165:3)
+     at router (/Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express/lib/router/index.js:34:12)
+     at Layer.handle [as handle_request] (/Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express/lib/router/layer.js:82:5)
+     at trim_prefix (/Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express/lib/router/index.js:271:13)
+     at /Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express/lib/router/index.js:238:9
+     at Function.proto.process_params (/Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express/lib/router/index.js:313:12)
+     at /Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express/lib/router/index.js:229:12
+     at Function.match_layer (/Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express/lib/router/index.js:296:3)
+     at next (/Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express/lib/router/index.js:190:10)
+     at isLoggedIn (/source/routes/appRoutes.coffee:87:10)
+     at Layer.handle [as handle_request] (/Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express/lib/router/layer.js:82:5)
+     at trim_prefix (/Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express/lib/router/index.js:271:13)
+     at /Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express/lib/router/index.js:238:9
+     at Function.proto.process_params (/Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express/lib/router/index.js:313:12)
+     at /Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express/lib/router/index.js:229:12
+     at Function.match_layer (/Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express/lib/router/index.js:296:3)
+     at next (/Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express/lib/router/index.js:190:10)
+     at /Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express-winston/index.js:231:9
+     at Layer.handle [as handle_request] (/Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express/lib/router/layer.js:82:5)
+     at trim_prefix (/Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express/lib/router/index.js:271:13)
+     at /Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express/lib/router/index.js:238:9
+     at Function.proto.process_params (/Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express/lib/router/index.js:313:12)
+     at /Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express/lib/router/index.js:229:12
+     at Function.match_layer (/Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express/lib/router/index.js:296:3)
+     at next (/Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express/lib/router/index.js:190:10)
+     at /Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express-winston/index.js:231:9
+     at Layer.handle [as handle_request] (/Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express/lib/router/layer.js:82:5)
+     at trim_prefix (/Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express/lib/router/index.js:271:13)
+     at /Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express/lib/router/index.js:238:9
+     at Function.proto.process_params (/Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express/lib/router/index.js:313:12)
+     at /Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express/lib/router/index.js:229:12
+     at Function.match_layer (/Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express/lib/router/index.js:296:3)
+     at next (/Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express/lib/router/index.js:190:10)
+     at jsonParser (/Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/body-parser/lib/types/json.js:83:36)
+     at Layer.handle [as handle_request] (/Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express/lib/router/layer.js:82:5)
+     at trim_prefix (/Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express/lib/router/index.js:271:13)
+     at /Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express/lib/router/index.js:238:9
+     at Function.proto.process_params (/Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express/lib/router/index.js:313:12)
+     at /Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express/lib/router/index.js:229:12
+     at Function.match_layer (/Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express/lib/router/index.js:296:3)
+     at next (/Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/express/lib/router/index.js:190:10)
+     at Promise.<anonymous> (/source/app.coffee:46:5)
+     at Promise.<anonymous> (/Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/mongoose/node_modules/mpromise/lib/promise.js:177:8)
+     at Promise.emit (events.js:95:17)
+     at Promise.emit (/Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/mongoose/node_modules/mpromise/lib/promise.js:84:38)
+     at Promise.fulfill (/Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/mongoose/node_modules/mpromise/lib/promise.js:97:20)
+     at /Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/mongoose/lib/query.js:1394:13
+     at model.Document.init (/Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/mongoose/lib/document.js:250:11)
+     at model.Model.init (/Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/mongoose-schema-extend/index.js:79:18)
+     at completeOne (/Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/mongoose/lib/query.js:1392:10)
+     at Object.cb (/Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/mongoose/lib/query.js:1151:11)
+     at Object._onImmediate (/Volumes/Home/Users/gabriel/Projects/dog-backend/node_modules/mongoose/node_modules/mquery/lib/utils.js:137:16)
+     at processImmediate [as _immediateCallback] (timers.js:345:15)
