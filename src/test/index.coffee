@@ -30,27 +30,38 @@ slackOptions =
 
 winstonSlack = new winstonSlackClass slackOptions
 
+testTypes = ['normal','errorParsing']
 
-testLevels = (levels, transport, assertMsg) ->
+testLevels = (levels, transport, assertMsg, testType) ->
   tests = []
   Object.keys(levels).forEach (level, index) ->
     tests.push
       name: "#{assertMsg} with the '#{level}' level"
       fn: (done) ->
+        testType = 'normal' unless testType?
+
         logOptions = {}
         logOptions.level = level
         logOptions.msg = 'test message'
         logOptions.meta = {}
 
-        sendOptions =
-          channel: slackOptions.channel
-          username: slackOptions.username
-          text: "*#{logOptions.msg}*"
+        if(testType == 'errorParsing')
+          logOptions.meta = {errorStack: rawError}
+        
+        sendOptions = {}
+        sendOptions.channel = slackOptions.channel
+        sendOptions.username = slackOptions.username
+        sendOptions.text = "*#{logOptions.msg}*"
+
+        if(testType == 'errorParsing')
+          sendOptions.text = "*#{logOptions.msg}*\n#{parsedError}"
 
         transport.log logOptions.level, logOptions.msg, logOptions.meta, (err) ->
           expect(transport.log).to.have.been.calledWith(logOptions.level, logOptions.msg, logOptions.meta)
-          expect(transport.log.callCount).to.equal(index+1)
-          expect(transport.slack.send.callCount).to.equal(index+1)
+
+          if(testType == 'normal')
+            expect(transport.log.callCount).to.equal(index+1)
+            expect(transport.slack.send.callCount).to.equal(index+1)
 
           # get args from slack.send
           sendLastCall = transport.slack.send.lastCall
@@ -64,41 +75,6 @@ testLevels = (levels, transport, assertMsg) ->
 
           done()
 
-  return tests
-
-
-errorParsingLevels = (levels, transport, assertMsg) ->
-  tests = []
-  Object.keys(levels).forEach (level, index) ->
-    tests.push
-      name: "#{assertMsg} with the '#{level}' level"
-      fn: (done) ->
-        logOptions = {}
-        logOptions.level = level
-        logOptions.msg = 'test message'
-        logOptions.meta = {errorStack: rawError}
-
-        sendOptions =
-          channel: slackOptions.channel
-          username: slackOptions.username
-          text: "*#{logOptions.msg}*\n#{parsedError}"
-
-
-        transport.log logOptions.level, logOptions.msg, logOptions.meta, (err) ->
-          expect(transport.log).to.have.been.calledWith(logOptions.level, logOptions.msg, logOptions.meta)
-
-          # get args from slack.send
-          sendLastCall = transport.slack.send.lastCall
-
-          expect(sendLastCall.args[0].channel).to.equal(sendOptions.channel)
-          expect(sendLastCall.args[0].username).to.equal(sendOptions.username)
-          expect(sendLastCall.args[0].text).to.equal(sendOptions.text)
-
-          sendLastCall.args[0].attachments[0].fields.forEach (field) ->
-            expect(field).to.contain.keys(['title', 'value']) if field?
-
-          done()
-          
   return tests
 
 
@@ -143,7 +119,7 @@ describe 'Winston-slack-transport', () ->
   for test in arrTestLevels
     it test.name, test.fn
 
-  arrErrorParsingLevels = errorParsingLevels winston.config.npm.levels, winstonSlack, 'Should respond, pass variables and parse error stack'
+  arrErrorParsingLevels = testLevels winston.config.npm.levels, winstonSlack, 'Should respond, pass variables and parse error stack', 'errorParsing'
   for test in arrErrorParsingLevels
     it test.name, test.fn
 
