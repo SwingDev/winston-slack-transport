@@ -68,7 +68,7 @@ Slack::log = (level, msg, meta, cb) ->
         }
       ]
     , (err) ->
-      cb(err, false) if err
+      return cb(err, false) if err
       cb(null, true)
 
   return
