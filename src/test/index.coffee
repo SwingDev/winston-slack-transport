@@ -4,15 +4,12 @@ chai        = require('chai')
 path        = require('path')
 sinon       = require('sinon')
 sinonChai   = require('sinon-chai')
-chaiThings  = require('chai-things')
 assert    = chai.assert
 expect    = chai.expect
 
 chai.use(sinonChai)
-chai.use(chaiThings)
 
 winston = require('winston')
-slackNotify = require('slack-notify')
 winstonSlackClass = require('../lib')
 
 rawError = fs.readFileSync './test/sample_error_raw.txt', 'utf8'
@@ -80,46 +77,78 @@ testLevels = (levels, transport, assertMsg, testType) ->
 
 ### ###
 # TESTS
-describe 'Winston-slack-transport', () ->
+describe 'winston-slack-transport tests', () ->
 
   before ->
-    sinon.stub winstonSlack.slack, 'request', (data, done) ->
-      done()
     sinon.spy winstonSlack.slack, 'send'
     sinon.spy winstonSlack, 'log'
 
-  after ->
-    (winstonSlack.slack).request.restore()
-    return
+  describe 'levels tests', () ->
 
-  it 'Should be instance of winston-slack-transport', (done) ->
-    assert.instanceOf winstonSlack, winstonSlackClass
-    assert.isFunction winstonSlack.log
-    done()
+    before ->
+      sinon.stub winstonSlack.slack, 'request', (data, done) ->
+        done()
 
-  it 'Should throw error if webHookUrl not specified', (done) ->
-    options = _.clone(slackOptions, true)
-    options.webHookUrl = undefined
-    expect(()->
-      new winstonSlackClass(options)
-      return
-    ).to.throw(Error)
-    done()
+    after ->
+      (winstonSlack.slack).request.restore()
 
-  it 'Should throw error if pid not specified', (done) ->
-    options = _.clone(slackOptions, true)
-    options.pid = undefined
-    expect(()->
-      new winstonSlackClass(options)
-      return
-    ).to.throw(Error)
-    done()
+    arrTestLevels = testLevels winston.config.npm.levels, winstonSlack, 'Should respond and pass variables'
+    for test in arrTestLevels
+      it test.name, test.fn
 
-  arrTestLevels = testLevels winston.config.npm.levels, winstonSlack, 'Should respond and pass variables'
-  for test in arrTestLevels
-    it test.name, test.fn
+    arrErrorParsingLevels = testLevels winston.config.npm.levels, winstonSlack, 'Should respond, pass variables and parse error stack', 'errorParsing'
+    for test in arrErrorParsingLevels
+      it test.name, test.fn
 
-  arrErrorParsingLevels = testLevels winston.config.npm.levels, winstonSlack, 'Should respond, pass variables and parse error stack', 'errorParsing'
-  for test in arrErrorParsingLevels
-    it test.name, test.fn
+  
+  describe 'common tests', () ->
+
+    response = {}
+    response.body = ''
+
+    before ->
+      sinon.stub winstonSlack.slack, 'request', (data, done) ->
+        if response.body isnt 'ok'
+          return done(new Error(response.body))
+        done()
+
+    after ->
+      (winstonSlack.slack).request.restore()
+
+    it 'Should be instance of winston-slack-transport', (done) ->
+      assert.instanceOf winstonSlack, winstonSlackClass
+      assert.isFunction winstonSlack.log
+      done()
+
+    it 'Should throw error if webHookUrl not specified', (done) ->
+      options = _.clone(slackOptions, true)
+      options.webHookUrl = undefined
+      expect(()->
+        new winstonSlackClass(options)
+        return
+      ).to.throw(Error)
+      done()
+
+    it 'Should throw error if pid not specified', (done) ->
+      options = _.clone(slackOptions, true)
+      options.pid = undefined
+      expect(()->
+        new winstonSlackClass(options)
+        return
+      ).to.throw(Error)
+      done()
+
+    it 'Should response with "ok" if message successfully send', (done) ->
+      response.body = 'ok'
+      winstonSlack.log 'error', 'test message', {}, (err, send) =>
+        expect(send).to.be.ok
+        done()
+        
+    it 'Should response with "[ErrorSlack]" if message not send (connection problem)', (done) ->
+      response.body = '[ErrorSlack]'
+      winstonSlack.log 'error', 'test message', {}, (err, send) =>
+        expect(send).to.not.be.ok
+        done()
+        
+
 
