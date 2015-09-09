@@ -19,6 +19,7 @@ winston.transports.Slack = Slack
 Slack::log = (level, msg, meta, cb) ->
   usage.lookup @pid, (err, stat) =>
     errorStack = (meta.errorStack).trim() if meta.errorStack?
+    metaJson = meta.json ? {}
     msg = "*#{msg}*"
 
     if errorStack?
@@ -50,6 +51,18 @@ Slack::log = (level, msg, meta, cb) ->
     totalMem = os.totalmem() / (1000*1000)
     usageMemP = usageMem/totalMem * 100
 
+    fields = [
+      { title: 'AppName', value: @app, short: true } if @app
+      { title: 'EnvName', value: @env, short: true } if @env
+      { title: 'CPU', value: "#{usageCpu.toFixed(2)}%", short: true } if stat?
+      { title: 'MEM', value: "#{usageMem.toFixed(2)} / #{totalMem.toFixed(2)} MB (#{usageMemP.toFixed(2)}%)", short: true } if stat?
+      { title: 'Timestamp', value: _getTimestamp(), short: true }
+      { title: 'Level', value: level, short: true } if level
+    ]
+
+    for jsonKey, jsonValue of metaJson
+      fields.push { title: jsonKey, value: jsonValue, short: true }
+
     @slack.send
       channel:    @channel
       username:   @username
@@ -57,14 +70,7 @@ Slack::log = (level, msg, meta, cb) ->
       icon_emoji: undefined
       attachments: [
         {
-          fields: [
-            { title: 'AppName', value: @app, short: true } if @app
-            { title: 'EnvName', value: @env, short: true } if @env
-            { title: 'CPU', value: "#{usageCpu.toFixed(2)}%", short: true } if stat?
-            { title: 'MEM', value: "#{usageMem.toFixed(2)} / #{totalMem.toFixed(2)} MB (#{usageMemP.toFixed(2)}%)", short: true } if stat?
-            { title: 'Timestamp', value: _getTimestamp(), short: true }
-            { title: 'Level', value: level, short: true } if level
-          ]
+          fields: fields
         }
       ]
     , (err) ->
