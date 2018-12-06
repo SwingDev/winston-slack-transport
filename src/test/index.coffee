@@ -140,13 +140,13 @@ describe 'winston-slack-transport tests', () ->
 
     it 'Should response with "ok" if message successfully send', (done) ->
       response.body = 'ok'
-      winstonSlack.log 'error', 'test message', {}, (err, send) =>
+      winstonSlack.log 'error', 'test message', {}, (err, send) ->
         expect(send).to.be.ok
         done()
         
     it 'Should response with "[ErrorSlack]" if message not send (connection problem)', (done) ->
       response.body = '[ErrorSlack]'
-      winstonSlack.log 'error', 'test message', {}, (err, send) =>
+      winstonSlack.log 'error', 'test message', {}, (err, send) ->
         expect(send).to.not.be.ok
         done()
         
