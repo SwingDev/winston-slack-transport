@@ -10,7 +10,7 @@ Slack = (options) ->
   throw new Error('webHookUrl must be specified') unless options.webHookUrl
   throw new Error('pid must be specified') unless options.pid
 
-  @slack = new slackNotify(@webHookUrl)
+  @slack = slackNotify @webHookUrl
   return
 
 util.inherits Slack, winston.Transport

@@ -1,6 +1,6 @@
 {
   "name": "winston-slack-transport",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Slack transport for winston",
   "main": "index.js",
   "author": "SWINGDEV",
@@ -18,7 +18,7 @@
   ],
   "dependencies": {
     "lodash": "^2.4.1",
-    "slack-notify": "^0.1.2",
+    "slack-notify": "^0.1.7",
     "usage": "^0.7.1",
     "util": "^0.10.3",
     "winston": "^0.8.3"
