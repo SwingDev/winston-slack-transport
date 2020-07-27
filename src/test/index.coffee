@@ -74,23 +74,25 @@ testLevels = (levels, transport, assertMsg, testType) ->
 
   return tests
 
+sandbox = sinon.createSandbox()
 
 ### ###
 # TESTS
 describe 'winston-slack-transport tests', () ->
 
   before ->
-    sinon.spy winstonSlack.slack, 'send'
-    sinon.spy winstonSlack, 'log'
+    sandbox.spy winstonSlack.slack, 'send'
+    sandbox.spy winstonSlack, 'log'
 
   describe 'levels tests', () ->
 
     before ->
-      sinon.stub winstonSlack.slack, 'request', (data, done) ->
-        done()
+      sandbox.stub(winstonSlack.slack, 'request').callsFake((data, done) ->
+        done())
 
     after ->
-      (winstonSlack.slack).request.restore()
+      sandbox.restore()
+      #(winstonSlack.slack).request.restore()
 
     arrTestLevels = testLevels winston.config.npm.levels, winstonSlack, 'Should respond and pass variables'
     for test in arrTestLevels
@@ -107,10 +109,10 @@ describe 'winston-slack-transport tests', () ->
     response.body = ''
 
     before ->
-      sinon.stub winstonSlack.slack, 'request', (data, done) ->
+      sandbox.stub(winstonSlack.slack, 'request').callsFake((data, done) ->
         if response.body isnt 'ok'
           return done(new Error(response.body))
-        done()
+        done())
 
     after ->
       (winstonSlack.slack).request.restore()
